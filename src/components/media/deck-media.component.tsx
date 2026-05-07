@@ -26,7 +26,7 @@ export function isVideoMedia(src: string) {
 }
 
 /**
- * Renders deck media as an image, scroll-aware video, or temporary asset stub.
+ * Renders deck media as an image or scroll-aware video.
  *
  * @param props - Media source and loading configuration.
  * @param props.src - Image or video URL.
@@ -127,7 +127,7 @@ function VideoMedia({
  *
  * @param props - Loading state props.
  * @param props.hasError - Whether media loading failed.
- * @returns A non-content placeholder while media resolves.
+ * @returns A neutral loading or error state while media resolves.
  *
  * @example
  * ```tsx
