@@ -19,7 +19,7 @@ export function Navigation() {
   return (
     <header className="navigation-shell pointer-events-none fixed z-50 flex justify-center max-[980px]:justify-start">
       <button
-        className="pointer-events-auto hidden min-h-10.5 cursor-pointer items-center gap-2 rounded-full border border-(--line) bg-[rgba(8,8,6,0.1)] px-[13px] text-[var(--soft)] backdrop-blur-[18px] max-[980px]:inline-flex"
+        className="pointer-events-auto hidden min-h-10.5 cursor-pointer items-center gap-2 rounded-full border border-(--line) bg-[rgba(8,8,6,0.1)] px-3.25 text-(--soft) backdrop-blur-[18px] max-[980px]:inline-flex"
         onClick={() => setIsOpen((value) => !value)}
         type="button"
       >
@@ -29,8 +29,8 @@ export function Navigation() {
       <nav
         className={
           isOpen
-            ? "pointer-events-auto flex gap-3 rounded-full border border-(--line) bg-[rgba(8,8,6,0.127)] p-1.5 shadow-[var(--shadow)] backdrop-blur-[22px] max-[980px]:absolute max-[980px]:left-0 max-[980px]:top-[52px] max-[980px]:w-[min(320px,calc(100vw-40px))] max-[980px]:flex-col max-[980px]:rounded-none"
-            : "pointer-events-auto flex gap-3 rounded-full border border-(--line) bg-[rgba(8,8,6,0.127)] p-1.5 shadow-(--shadow) backdrop-blur-[22px] max-[980px]:absolute max-[980px]:left-0 max-[980px]:top-[52px] max-[980px]:hidden max-[980px]:w-[min(320px,calc(100vw-40px))] max-[980px]:flex-col max-[980px]:rounded-none"
+            ? "pointer-events-auto flex gap-3 rounded-full border border-(--line) bg-[rgba(8,8,6,0.127)] p-1.5 shadow-(--shadow) backdrop-blur-[22px] max-[980px]:absolute max-[980px]:left-0 max-[980px]:top-13 max-[980px]:w-[min(320px,calc(100vw-40px))] max-[980px]:flex-col max-[980px]:rounded-none"
+            : "pointer-events-auto flex gap-3 rounded-full border border-(--line) bg-[rgba(8,8,6,0.127)] p-1.5 shadow-(--shadow) backdrop-blur-[22px] max-[980px]:absolute max-[980px]:left-0 max-[980px]:top-13 max-[980px]:hidden max-[980px]:w-[min(320px,calc(100vw-40px))] max-[980px]:flex-col max-[980px]:rounded-none"
         }
         aria-label="Deck chapters"
       >

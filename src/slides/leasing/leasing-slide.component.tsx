@@ -7,6 +7,7 @@ import {
   staggerItem,
 } from "../../components/animation/scroll-reveal.component";
 import { leasingMedia, leasingPaths } from "./leasing.data";
+import type { LeasingPathId } from "./leasing.types";
 import { getLeasingPath } from "./leasing.utils";
 
 /**
@@ -20,14 +21,14 @@ import { getLeasingPath } from "./leasing.utils";
  * ```
  */
 export default function LeasingSlide() {
-  const [activePathId, setActivePathId] = useState(leasingPaths[0].id);
+  const [activePathId, setActivePathId] = useState<LeasingPathId>(leasingPaths[0].id);
   const activePath = getLeasingPath(activePathId);
-  const media = leasingMedia[activePath.id as keyof typeof leasingMedia];
+  const media = leasingMedia[activePath.id];
 
   return (
-    <section className="leasing-section" id="leasing">
-      <div className="section-inner mx-auto">
-        <ScrollReveal className="slide-header">
+    <section className="py-[clamp(88px,12vw,148px)]" id="leasing">
+      <div className="mx-auto w-[min(1180px,calc(100%-48px))] max-[640px]:w-[min(100%-32px,1180px)]">
+        <ScrollReveal className="mb-[42px] max-w-[850px] [&>p:not(.eyebrow)]:max-w-[680px] [&>p:not(.eyebrow)]:text-[1.05rem]">
           <p className="eyebrow">Retail leasing</p>
           <h2>Not just square footage. A destination channel.</h2>
           <p>
@@ -36,9 +37,9 @@ export default function LeasingSlide() {
           </p>
         </ScrollReveal>
 
-        <div className="leasing-layout grid max-[980px]:grid-cols-1">
+        <div className="grid grid-cols-[320px_minmax(0,1fr)] gap-[18px] max-[980px]:grid-cols-1">
           <motion.div
-            className="path-selector grid"
+            className="grid gap-2.5"
             aria-label="Leasing paths"
             variants={staggerContainer}
             initial="hidden"
@@ -49,8 +50,8 @@ export default function LeasingSlide() {
               <motion.button
                 className={
                   activePathId === path.id
-                    ? "min-h-28 cursor-pointer border border-[rgba(217,181,111,0.82)] bg-[rgba(217,181,111,0.15)] p-5 text-left text-[var(--ink)]"
-                    : "min-h-28 cursor-pointer border border-[var(--line)] bg-[rgba(248,245,236,0.05)] p-5 text-left text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.55)]"
+                    ? "min-h-28 cursor-pointer border border-[rgba(217,181,111,0.82)] bg-[rgba(217,181,111,0.15)] p-5 text-left text-(--ink)"
+                    : "min-h-28 cursor-pointer border border-(--line) bg-[rgba(248,245,236,0.05)] p-5 text-left text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.55)]"
                 }
                 key={path.id}
                 onClick={() => setActivePathId(path.id)}
@@ -59,14 +60,14 @@ export default function LeasingSlide() {
                 whileHover={{ x: 8 }}
                 transition={{ duration: 0.24 }}
               >
-                <span>{path.title}</span>
-                <small>{path.audience}</small>
+                <span className="mb-2 block text-[1.05rem] font-extrabold">{path.title}</span>
+                <small className="block leading-normal text-(--muted)">{path.audience}</small>
               </motion.button>
             ))}
           </motion.div>
 
           <ScrollReveal direction="scale" delay={0.08}>
-            <article className="slide-feature grid overflow-hidden border border-[var(--line)] bg-[var(--panel)] shadow-[var(--shadow)] backdrop-blur-[18px] max-[980px]:grid-cols-1">
+            <article className="slide-feature grid overflow-hidden border border-(--line) bg-(--panel) shadow-(--shadow) backdrop-blur-[18px] max-[980px]:grid-cols-1">
               <AnimatePresence mode="wait">
                 <motion.div
                   className="media-frame compact leasing-media-frame overflow-hidden"
@@ -81,7 +82,7 @@ export default function LeasingSlide() {
               </AnimatePresence>
               <AnimatePresence mode="wait">
                 <motion.div
-                  className="feature-copy w-full"
+                  className="w-full p-[clamp(26px,4vw,48px)]"
                   key={activePath.id}
                   initial={{ opacity: 0, x: 22 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -91,19 +92,19 @@ export default function LeasingSlide() {
                   <h3>{activePath.title}</h3>
                   <p>{activePath.pitch}</p>
                   <motion.ul
-                    className="metric-list grid list-none p-0"
+                    className="mt-7 grid list-none gap-3 p-0"
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
                   >
                     {activePath.metrics.map((metric) => (
-                      <motion.li className="flex items-center" key={metric} variants={staggerItem}>
-                        <Check size={16} aria-hidden="true" />
+                      <motion.li className="flex items-center gap-2.5 text-(--ink)" key={metric} variants={staggerItem}>
+                        <Check className="shrink-0 text-(--gold)" size={16} aria-hidden="true" />
                         {metric}
                       </motion.li>
                     ))}
                   </motion.ul>
-                  <a className="inline-flex w-36 h-10 rounded-full justify-center bg-(--gold) items-center gap-2 my-4 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#action">
+                  <a className="inline-flex w-36 h-10 rounded-full justify-center bg-(--gold) items-center gap-2 my-4 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#contact">
                     Build
                     <ArrowUpRight size={16} aria-hidden="true" />
                   </a>

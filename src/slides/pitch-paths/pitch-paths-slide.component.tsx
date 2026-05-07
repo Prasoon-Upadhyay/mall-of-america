@@ -22,8 +22,8 @@ export default function PitchPathsSlide() {
   const SelectedIcon = selectedAudience.icon;
 
   return (
-    <section className="audience-band" id="pitch-paths" aria-label="Choose business objective">
-      <div className="section-inner audience-grid mx-auto grid items-center max-[980px]:grid-cols-1">
+    <section className="bg-[#e8e1d2] py-[clamp(88px,12vw,148px)] text-[#14120f] [&_.eyebrow]:text-[#805332] [&_p]:text-[rgba(20,18,15,0.72)]" id="pitch-paths" aria-label="Choose business objective">
+      <div className="mx-auto grid w-[min(1180px,calc(100%-48px))] grid-cols-[minmax(300px,0.72fr)_minmax(0,1.28fr)] items-center gap-[clamp(28px,6vw,84px)] max-[980px]:grid-cols-1 max-[640px]:w-[min(100%-32px,1180px)]">
         <ScrollReveal direction="right">
           <p className="eyebrow">Choose the pitch path</p>
           <h2>One destination. Three commercial plays.</h2>
@@ -64,9 +64,9 @@ export default function PitchPathsSlide() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.24 }}
             >
-              <div className="flex flex-col items-start justify-center">
+              <div className="flex flex-col gap-4 items-start justify-center">
                 <h3>{selectedAudience.headline}</h3>
-                <p>{selectedAudience.body}</p>
+                <p className="text-sm">{selectedAudience.body}</p>
                 <button
                   className="inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 font-bold text-(--ink) transition-colors hover:text-(--gold)"
                   onClick={() => goToSlide(selectedAudience.targetId)}
@@ -74,7 +74,6 @@ export default function PitchPathsSlide() {
                 >
                   <SelectedIcon className="text-(--gold)" size={24} aria-hidden="true" />
                   Continue
-                  {/* <ArrowUpRight size={16} aria-hidden="true" /> */}
                 </button>
               </div>
               <div className="pitch-path-video overflow-hidden border border-[rgba(248,245,236,0.14)] bg-black">

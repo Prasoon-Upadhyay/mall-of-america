@@ -1,5 +1,5 @@
 import { assets } from "../../data/assets";
-import type { LeasingPath } from "./leasing.types";
+import type { LeasingPath, LeasingPathId } from "./leasing.types";
 
 export const leasingPaths: LeasingPath[] = [
   {
@@ -28,7 +28,7 @@ export const leasingPaths: LeasingPath[] = [
   },
 ];
 
-export const leasingMedia = {
+export const leasingMedia: Record<LeasingPathId, string> = {
   flagship: assets.retail.flagship,
   luxury: assets.retail.luxury,
   popup: assets.retail.popup,

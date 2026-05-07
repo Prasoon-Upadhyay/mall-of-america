@@ -9,7 +9,7 @@ const EntertainmentSlide = lazy(() => import("../slides/entertainment/entertainm
 const DiningSlide = lazy(() => import("../slides/dining/dining-slide.component"));
 const EventsSlide = lazy(() => import("../slides/events/events-slide.component"));
 const SponsorshipSlide = lazy(() => import("../slides/sponsorship/sponsorship-slide.component"));
-const ActionSlide = lazy(() => import("../slides/action/action-slide.component"));
+const ContactSlide = lazy(() => import("../slides/contact/contact-slide.component"));
 
 export const deckSlides: DeckSlideDefinition[] = [
   {
@@ -53,8 +53,8 @@ export const deckSlides: DeckSlideDefinition[] = [
     component: SponsorshipSlide,
   },
   {
-    id: "action",
+    id: "contact",
     label: "Contact",
-    component: ActionSlide,
+    component: ContactSlide,
   },
 ];

@@ -9,7 +9,7 @@ type ChapterSectionProps = {
   title: string;
   body: string;
   media: string;
-  mediaVariant?: "default" | "immersive" | "widescreen";
+  mediaVariant?: "immersive" | "widescreen";
   points: string[];
 };
 
@@ -30,7 +30,7 @@ export function ChapterSection({
   title,
   body,
   media,
-  mediaVariant = "default",
+  mediaVariant = "immersive",
   points,
 }: ChapterSectionProps) {
   const mediaFrameClassName =
@@ -39,22 +39,22 @@ export function ChapterSection({
       : "media-frame immersive reveal-media overflow-hidden max-[640px]:min-h-[340px]";
 
   return (
-    <section className="chapter-section" id={id}>
-      <div className="section-inner split-layout mx-auto grid items-center max-[980px]:grid-cols-1">
-        <ScrollReveal className="chapter-copy" direction="right">
+    <section className="py-[clamp(88px,12vw,148px)]" id={id}>
+      <div className="mx-auto grid w-[min(1180px,calc(100%-48px))] grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] items-center gap-[clamp(28px,6vw,84px)] max-[980px]:grid-cols-1 max-[640px]:w-[min(100%-32px,1180px)]">
+        <ScrollReveal className="[&>p:not(.eyebrow)]:max-w-160 [&>p:not(.eyebrow)]:text-[1.05rem]" direction="right">
           <p className="eyebrow">{kicker}</p>
           <h2>{title}</h2>
           <p>{body}</p>
           <motion.ul
-            className="check-list grid list-none p-0"
+            className="mt-7 grid list-none gap-3 p-0"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
           >
             {points.map((point) => (
-              <motion.li className="flex items-center" key={point} variants={staggerItem}>
-                <CheckCircle2 size={18} aria-hidden="true" />
+              <motion.li className="flex items-center gap-2.5 text-(--ink)" key={point} variants={staggerItem}>
+                <CheckCircle2 className="shrink-0 text-(--gold)" size={18} aria-hidden="true" />
                 {point}
               </motion.li>
             ))}

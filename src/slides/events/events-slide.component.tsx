@@ -20,9 +20,9 @@ import { getEventBookingCopy } from "./events.utils";
  */
 export default function EventsSlide() {
   return (
-    <section className="events-section" id="events">
-      <div className="section-inner mx-auto">
-        <ScrollReveal className="slide-header">
+    <section className="py-[clamp(88px,12vw,148px)]" id="events">
+      <div className="mx-auto w-[min(1180px,calc(100%-48px))] max-[640px]:w-[min(100%-32px,1180px)]">
+        <ScrollReveal className="mb-[42px] max-w-[850px] [&>p:not(.eyebrow)]:max-w-[680px] [&>p:not(.eyebrow)]:text-[1.05rem]">
           <p className="eyebrow">Events & platform</p>
           <h2>A mall-scale audience with venue-scale programming potential.</h2>
           <p>
@@ -32,7 +32,7 @@ export default function EventsSlide() {
         </ScrollReveal>
 
         <motion.div
-          className="capability-grid grid max-[980px]:grid-cols-1"
+          className="grid grid-cols-3 gap-4 max-[980px]:grid-cols-1"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -40,7 +40,7 @@ export default function EventsSlide() {
         >
           {eventCapabilities.map((capability) => (
             <motion.article
-              className="capability-card overflow-hidden border border-(--line) bg-(--panel) p-6 shadow-(--shadow) backdrop-blur-[18px] max-[640px]:p-5"
+              className="capability-card overflow-hidden border border-(--line) bg-(--panel) p-6 shadow-(--shadow) backdrop-blur-[18px] max-[640px]:p-5 [&_h3]:mt-0"
               key={capability.title}
               variants={staggerItem}
               whileHover={{ y: -8, transition: { duration: 0.22 } }}
@@ -53,7 +53,7 @@ export default function EventsSlide() {
               <strong className="my-5 block min-h-12 text-(--gold) leading-[1.45]">
                 {capability.idealFor}
               </strong>
-              <a className="inline-flex items-center gap-2 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#action">
+              <a className="inline-flex items-center gap-2 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#contact">
                 {getEventBookingCopy(capability.title)}
                 <ArrowUpRight size={16} aria-hidden="true" />
               </a>
