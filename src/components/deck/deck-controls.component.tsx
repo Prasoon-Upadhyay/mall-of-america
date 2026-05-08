@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Volume2, VolumeX } from "lucide-react";
+import { useAudio } from "../../contexts/audio/audio.hooks";
 import { useDeck } from "../../contexts/deck/deck.hooks";
 
 /**
@@ -13,6 +14,7 @@ import { useDeck } from "../../contexts/deck/deck.hooks";
  */
 export function DeckControls() {
   const { activeIndex, canGoNext, canGoPrevious, goToNext, goToPrevious, totalSlides } = useDeck();
+  const { hasAudioSource, isMuted, toggleMuted } = useAudio();
 
   return (
     <div
@@ -31,6 +33,15 @@ export function DeckControls() {
       <span className="min-w-[70px] text-center text-[0.78rem] font-extrabold text-[var(--muted)]">
         {String(activeIndex + 1).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}
       </span>
+      <button
+        aria-label={isMuted ? "Unmute deck audio" : "Mute deck audio"}
+        className="grid size-[38px] cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"
+        disabled={!hasAudioSource}
+        onClick={toggleMuted}
+        type="button"
+      >
+        {isMuted ? <VolumeX size={18} aria-hidden="true" /> : <Volume2 size={18} aria-hidden="true" />}
+      </button>
       <button
         aria-label="Next chapter"
         className="grid size-[38px] cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"

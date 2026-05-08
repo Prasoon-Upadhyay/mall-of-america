@@ -1,4 +1,7 @@
 export const assets = {
+  audio: {
+    ambient: "https://moa-assets.vercel.app/audio/ambient.mp3",
+  },
   hero: {
     video: "https://moa-assets.vercel.app/videos/hero.mp4",
   },

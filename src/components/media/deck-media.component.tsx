@@ -6,6 +6,10 @@ type DeckMediaProps = {
   src: string;
   loading?: "eager" | "lazy";
   fit?: "cover" | "contain";
+  videoLoop?: boolean;
+  videoMuted?: boolean;
+  videoPreload?: "auto" | "metadata" | "none";
+  onVideoEnded?: () => void;
 };
 
 const videoPattern = /\.(mp4|webm)(\?.*)?$/i;
@@ -39,7 +43,15 @@ export function isVideoMedia(src: string) {
  * <DeckMedia src="/videos/why-moa.mp4" />
  * ```
  */
-export function DeckMedia({ src, loading = "lazy", fit = "cover" }: DeckMediaProps) {
+export function DeckMedia({
+  src,
+  loading = "lazy",
+  fit = "cover",
+  videoLoop = true,
+  videoMuted = true,
+  videoPreload = "metadata",
+  onVideoEnded,
+}: DeckMediaProps) {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
@@ -60,8 +72,12 @@ export function DeckMedia({ src, loading = "lazy", fit = "cover" }: DeckMediaPro
       {isVideoMedia(src) ? (
         <VideoMedia
           className={mediaClassName}
+          loop={videoLoop}
+          muted={videoMuted}
+          preload={videoPreload}
           src={src}
           onError={() => setStatus("error")}
+          onEnded={onVideoEnded}
           onReady={() => setStatus("ready")}
         />
       ) : (
@@ -94,12 +110,20 @@ export function DeckMedia({ src, loading = "lazy", fit = "cover" }: DeckMediaPro
 function VideoMedia({
   src,
   className,
+  loop,
+  muted,
   onError,
+  onEnded,
   onReady,
+  preload,
 }: Pick<DeckMediaProps, "src"> & {
   className: string;
+  loop: boolean;
+  muted: boolean;
   onError: () => void;
+  onEnded?: () => void;
   onReady: () => void;
+  preload: NonNullable<DeckMediaProps["videoPreload"]>;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   useVideoPlaybackInView(videoRef);
@@ -110,12 +134,13 @@ function VideoMedia({
       src={src}
       className={className}
       autoPlay
-      muted
-      loop
+      muted={muted}
+      loop={loop}
       playsInline
-      preload="metadata"
+      preload={preload}
       aria-hidden="true"
       onCanPlay={onReady}
+      onEnded={onEnded}
       onError={onError}
       onLoadedData={onReady}
     />
