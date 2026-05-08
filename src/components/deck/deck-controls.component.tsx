@@ -18,24 +18,24 @@ export function DeckControls() {
 
   return (
     <div
-      className="fixed right-[22px] bottom-5 z-50 flex items-center gap-2 border border-[var(--line)] bg-[rgba(8,8,6,0.72)] p-[7px] shadow-[var(--shadow)] backdrop-blur-[18px]"
+      className="fixed right-5.5 bottom-5 z-50 flex items-center gap-2 border border-(--line) bg-[rgba(8,8,6,0.72)] p-1.75 shadow-(--shadow) backdrop-blur-[18px]"
       aria-label="Deck controls"
     >
       <button
         aria-label="Previous chapter"
         disabled={!canGoPrevious}
         onClick={goToPrevious}
-        className="grid size-[38px] cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-9.5 cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-(--gold) disabled:cursor-not-allowed disabled:opacity-40"
         type="button"
       >
         <ArrowLeft size={18} aria-hidden="true" />
       </button>
-      <span className="min-w-[70px] text-center text-[0.78rem] font-extrabold text-[var(--muted)]">
+      <span className="min-w-17.5 text-center text-[0.78rem] font-extrabold text-(--muted)">
         {String(activeIndex + 1).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}
       </span>
       <button
         aria-label={isMuted ? "Unmute deck audio" : "Mute deck audio"}
-        className="grid size-[38px] cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-9.5 cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-(--gold) disabled:cursor-not-allowed disabled:opacity-40"
         disabled={!hasAudioSource}
         onClick={toggleMuted}
         type="button"
@@ -44,7 +44,7 @@ export function DeckControls() {
       </button>
       <button
         aria-label="Next chapter"
-        className="grid size-[38px] cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-[var(--ink)] transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-9.5 cursor-pointer place-items-center border border-[rgba(248,245,236,0.18)] bg-[rgba(248,245,236,0.08)] text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.7)] hover:text-(--gold) disabled:cursor-not-allowed disabled:opacity-40"
         disabled={!canGoNext}
         onClick={goToNext}
         type="button"

@@ -47,8 +47,8 @@ export function CinematicIntro() {
 
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,17,13,0.58),rgba(20,17,13,0.16)_56%,rgba(20,17,13,0.48)),linear-gradient(180deg,rgba(20,17,13,0.08),rgba(20,17,13,0.34)_72%,rgba(20,17,13,0.66)_100%)]" />
 
-      <div className="relative z-[2] flex h-full items-end px-[clamp(22px,5vw,76px)] pb-[clamp(86px,12vh,128px)]">
-        <div className="max-w-[900px]">
+      <div className="relative z-2 flex h-full items-end px-[clamp(22px,5vw,76px)] pb-[clamp(86px,12vh,128px)]">
+        <div className="max-w-225">
           <h1 className="text-[clamp(3.8rem,10vw,9.5rem)] uppercase">Mall of America</h1>
           <div className="relative h-9 overflow-hidden">
             {introLines.map((line, index) => (
@@ -76,7 +76,7 @@ export function CinematicIntro() {
         </div>
       </div>
 
-      <div className="absolute bottom-6 right-6 z-[3] flex items-center gap-3 max-[640px]:bottom-4 max-[640px]:right-4">
+      <div className="absolute bottom-6 right-6 z-3 flex items-center gap-3 max-[640px]:bottom-4 max-[640px]:right-4">
         <button
           className="grid size-11 place-items-center rounded-full border border-(--line) bg-[rgba(8,8,6,0.58)] text-(--ink) backdrop-blur-xl transition-colors hover:border-[rgba(217,181,111,0.62)] hover:text-(--gold)"
           type="button"
