@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-export type IntroContextValue = {
+type IntroContextValue = {
   completeIntro: () => void;
   showIntro: boolean;
 };

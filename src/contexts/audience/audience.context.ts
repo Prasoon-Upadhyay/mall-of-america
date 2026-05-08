@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import type { Audience } from "../../data/audience.data";
 
-export type AudienceContextValue = {
+type AudienceContextValue = {
     audience: Audience;
     setAudience: (audience: Audience) => void;
 };

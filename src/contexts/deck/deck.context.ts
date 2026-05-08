@@ -2,7 +2,7 @@ import { createContext } from "react";
 import type { DeckSlideDefinition } from "../../components/deck/deck.types";
 import type { UseDeckNavigationResult } from "../../hooks/use-deck-navigation.types";
 
-export type DeckContextValue = UseDeckNavigationResult & {
+type DeckContextValue = UseDeckNavigationResult & {
     slides: DeckSlideDefinition[];
     totalSlides: number;
 };

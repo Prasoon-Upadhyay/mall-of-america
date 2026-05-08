@@ -18,11 +18,7 @@ import { AudioContext } from "./audio.context";
  */
 export function AudioProvider({ children }: PropsWithChildren) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [error, setError] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [playbackState, setPlaybackState] = useState<"idle" | "playing" | "blocked" | "error">(
-    "idle",
-  );
   const hasAudioSource = assets.audio.ambient.length > 0;
   const toggleMuted = useCallback(() => setIsMuted((muted) => !muted), []);
 
@@ -30,7 +26,6 @@ export function AudioProvider({ children }: PropsWithChildren) {
     const audio = audioRef.current;
 
     if (!audio || !hasAudioSource) {
-      setPlaybackState("idle");
       return;
     }
 
@@ -38,34 +33,18 @@ export function AudioProvider({ children }: PropsWithChildren) {
 
     if (isMuted) {
       audio.pause();
-      setPlaybackState("idle");
       return;
     }
 
     let isCancelled = false;
 
-    audio
-      .play()
-      .then(() => {
-        if (isCancelled) {
-          return;
-        }
+    void audio.play().catch(() => {
+      if (isCancelled) {
+        return;
+      }
 
-        setError(null);
-        setPlaybackState("playing");
-      })
-      .catch((playbackError: unknown) => {
-        if (isCancelled) {
-          return;
-        }
-
-        const message =
-          playbackError instanceof Error ? playbackError.message : "Audio playback was blocked.";
-
-        setError(message);
-        setPlaybackState("blocked");
-        setIsMuted(true);
-      });
+      setIsMuted(true);
+    });
 
     return () => {
       isCancelled = true;
@@ -74,13 +53,11 @@ export function AudioProvider({ children }: PropsWithChildren) {
 
   const value = useMemo(
     () => ({
-      error,
       hasAudioSource,
       isMuted,
-      playbackState,
       toggleMuted,
     }),
-    [error, hasAudioSource, isMuted, playbackState, toggleMuted],
+    [hasAudioSource, isMuted, toggleMuted],
   );
 
   return (
@@ -93,8 +70,6 @@ export function AudioProvider({ children }: PropsWithChildren) {
           preload="auto"
           aria-hidden="true"
           onError={() => {
-            setError("Ambient audio could not be loaded.");
-            setPlaybackState("error");
             setIsMuted(true);
           }}
         />

@@ -11,9 +11,6 @@ export type DiningVenue = {
   name: string;
   category: string;
   location: string;
-  commercialRole: string;
   pitch: string;
   media: string;
-  proofPoints: string[];
-  sourceUrl: string;
 };

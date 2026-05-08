@@ -25,7 +25,7 @@ const videoPattern = /\.(mp4|webm)(\?.*)?$/i;
  * isVideoMedia("https://example.com/clip.mp4");
  * ```
  */
-export function isVideoMedia(src: string) {
+function isVideoMedia(src: string) {
   return videoPattern.test(src);
 }
 

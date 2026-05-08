@@ -1,10 +1,8 @@
 import { createContext } from "react";
 
-export type AudioContextValue = {
-  error: string | null;
+type AudioContextValue = {
   hasAudioSource: boolean;
   isMuted: boolean;
-  playbackState: "idle" | "playing" | "blocked" | "error";
   toggleMuted: () => void;
 };
 
