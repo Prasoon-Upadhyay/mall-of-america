@@ -13,6 +13,7 @@ export type DiningVenue = {
   location: string;
   commercialRole: string;
   pitch: string;
+  media: string;
   proofPoints: string[];
   sourceUrl: string;
 };

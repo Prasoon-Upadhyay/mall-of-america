@@ -57,14 +57,14 @@ export default function PitchPathsSlide() {
           </div>
           <AnimatePresence mode="wait">
             <motion.div
-              className="audience-card grid grid-cols-[minmax(220px,0.72fr)_minmax(360px,1.28fr)] items-stretch gap-6 border border-(--line) bg-[#14120f] p-7.5 text-[#f8f5ec] shadow-(--shadow) backdrop-blur-[18px] max-[820px]:grid-cols-1 max-[640px]:p-5"
+              className="audience-card grid grid-cols-[minmax(220px,0.72fr)_minmax(360px,1.28fr)] items-stretch gap-6 border border-(--line) bg-[#14120f] text-[#f8f5ec] shadow-(--shadow) backdrop-blur-[18px] max-[820px]:grid-cols-1 max-[640px]:p-5"
               key={audience}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.24 }}
             >
-              <div className="flex flex-col gap-4 items-start justify-center">
+              <div className="flex flex-col m-6 gap-4 items-start justify-center">
                 <h3>{selectedAudience.headline}</h3>
                 <p className="text-sm">{selectedAudience.body}</p>
                 <button

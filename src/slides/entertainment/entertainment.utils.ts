@@ -1,5 +1,10 @@
-import { entertainmentAttractions } from "./entertainment.data";
-import type { EntertainmentAttraction, EntertainmentAttractionId } from "./entertainment.types";
+import { entertainmentAttractions, entertainmentOverview } from "./entertainment.data";
+import type {
+  EntertainmentAttraction,
+  EntertainmentAttractionId,
+  EntertainmentOverview,
+  EntertainmentSelectionId,
+} from "./entertainment.types";
 
 /**
  * Finds an entertainment attraction by id.
@@ -19,6 +24,27 @@ export function getEntertainmentAttraction(
     entertainmentAttractions.find((attraction) => attraction.id === attractionId) ??
     entertainmentAttractions[0]
   );
+}
+
+/**
+ * Finds the active entertainment story by selector id.
+ *
+ * @param selectionId - Overview or attraction id to display.
+ * @returns The overview story or matching attraction.
+ *
+ * @example
+ * ```ts
+ * getEntertainmentStory("overview");
+ * ```
+ */
+export function getEntertainmentStory(
+  selectionId: EntertainmentSelectionId,
+): EntertainmentAttraction | EntertainmentOverview {
+  if (selectionId === entertainmentOverview.id) {
+    return entertainmentOverview;
+  }
+
+  return getEntertainmentAttraction(selectionId);
 }
 
 /**

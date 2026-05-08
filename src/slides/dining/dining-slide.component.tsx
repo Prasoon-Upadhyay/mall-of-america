@@ -1,15 +1,6 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
-import {
-  ScrollReveal,
-  staggerContainer,
-  staggerItem,
-} from "../../components/animation/scroll-reveal.component";
-import { DeckMedia } from "../../components/media/deck-media.component";
-import { diningMedia, diningVenues } from "./dining.data";
-import type { DiningVenueId } from "./dining.types";
-import { getDiningContactCopy, getDiningVenue } from "./dining.utils";
+import { MapPin } from "lucide-react";
+import { ScrollReveal } from "../../components/animation/scroll-reveal.component";
+import { diningVenues } from "./dining.data";
 
 /**
  * Renders the interactive dining and lifestyle slide.
@@ -22,13 +13,13 @@ import { getDiningContactCopy, getDiningVenue } from "./dining.utils";
  * ```
  */
 export default function DiningSlide() {
-  const [activeVenueId, setActiveVenueId] = useState<DiningVenueId>(diningVenues[0].id);
-  const activeVenue = getDiningVenue(activeVenueId);
-
   return (
-    <section className="py-[clamp(88px,12vw,148px)]" id="dining">
+    <section
+      className="relative overflow-hidden py-[clamp(88px,12vw,148px)] before:pointer-events-none before:absolute before:inset-[8%_auto_auto_54%] before:h-[min(420px,40vw)] before:w-[min(420px,40vw)] before:bg-[radial-gradient(circle,rgba(86,117,106,0.22),transparent_68%)] before:content-['']"
+      id="dining"
+    >
       <div className="mx-auto w-[min(1180px,calc(100%-48px))] max-[640px]:w-[min(100%-32px,1180px)]">
-        <ScrollReveal className="mb-[42px] max-w-[880px] [&>p:not(.eyebrow)]:max-w-[700px] [&>p:not(.eyebrow)]:text-[1.05rem]">
+        <ScrollReveal className="mb-10.5 max-w-220 [&>p:not(.eyebrow)]:max-w-175 [&>p:not(.eyebrow)]:text-[1.05rem]">
           <p className="eyebrow">Dining & lifestyle</p>
           <h2>Food, social time, and repeat visits move together.</h2>
           <p>
@@ -37,80 +28,45 @@ export default function DiningSlide() {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-[minmax(340px,0.92fr)_minmax(0,1.08fr)] gap-5 max-[980px]:grid-cols-1">
-          <ScrollReveal direction="right" delay={0.08}>
-            <article className="flex min-h-full flex-col justify-between border border-(--line) bg-(--panel) p-[clamp(24px,4vw,42px)] shadow-(--shadow) backdrop-blur-[18px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeVenue.id}
-                  initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, x: 16, filter: "blur(8px)" }}
-                  transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <span className="mb-4 inline-flex border border-(--line) bg-[rgba(248,245,236,0.04)] px-3 py-2 text-[0.78rem] font-extrabold uppercase text-(--gold)">
-                    {activeVenue.category}
-                  </span>
-                  <h3>{activeVenue.name}</h3>
-                  <p className="text-(--muted)">{activeVenue.location}</p>
-                  <strong className="my-5 block text-[1.1rem] leading-snug text-(--ink)">
-                    {activeVenue.commercialRole}
-                  </strong>
-                  <p>{activeVenue.pitch}</p>
-                  <ul className="mt-6 grid list-none gap-3 p-0">
-                    {activeVenue.proofPoints.map((point) => (
-                      <li className="flex items-center gap-2.5 text-(--ink)" key={point}>
-                        <Check className="shrink-0 text-(--gold)" size={16} aria-hidden="true" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              </AnimatePresence>
-              <a className="mt-7 inline-flex items-center gap-2 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#contact">
-                {getDiningContactCopy(activeVenue)}
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </article>
-          </ScrollReveal>
-
-          <ScrollReveal
-            className="media-frame reveal-media h-full min-h-full overflow-hidden max-[980px]:min-h-[420px] max-[640px]:min-h-[340px]"
-            direction="left"
-          >
-            <DeckMedia src={diningMedia} />
-          </ScrollReveal>
-        </div>
-
-        <motion.div
-          className="mt-4 grid grid-cols-3 gap-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          aria-label="Dining venue selector"
-        >
-          {diningVenues.map((venue) => (
-            <motion.button
+        <div className="grid gap-[clamp(22px,4vw,42px)]" aria-label="Dining venue story">
+          {diningVenues.map((venue, index) => (
+            <ScrollReveal
               className={
-                activeVenueId === venue.id
-                  ? "min-h-[118px] cursor-pointer border border-[rgba(217,181,111,0.82)] bg-[rgba(217,181,111,0.15)] p-4 text-left text-(--ink)"
-                  : "min-h-[118px] cursor-pointer border border-(--line) bg-[rgba(248,245,236,0.05)] p-4 text-left text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.55)]"
+                index % 2 === 0
+                  ? "mx-auto grid w-[min(980px,100%)] grid-cols-[minmax(0,0.76fr)_minmax(280px,0.68fr)] items-center gap-[clamp(18px,3.4vw,42px)] max-[820px]:grid-cols-1"
+                  : "mx-auto grid w-[min(980px,100%)] grid-cols-[minmax(280px,0.68fr)_minmax(0,0.76fr)] items-center gap-[clamp(18px,3.4vw,42px)] max-[820px]:grid-cols-1"
               }
+              direction={index % 2 === 0 ? "right" : "left"}
               key={venue.id}
-              onClick={() => setActiveVenueId(venue.id)}
-              type="button"
-              variants={staggerItem}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.22 }}
             >
-              <span className="mb-2 block text-[0.72rem] font-extrabold uppercase text-(--gold)">
-                {venue.category}
-              </span>
-              <strong className="block leading-tight">{venue.name}</strong>
-            </motion.button>
+              <div
+                className={
+                  index % 2 === 0
+                    ? "group min-w-0"
+                    : "group min-w-0 max-[820px]:order-first min-[821px]:order-last"
+                }
+              >
+                <div className="reveal-media aspect-video max-h-70 overflow-hidden border border-(--line) bg-(--panel-strong) shadow-(--shadow) transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-[rgba(217,181,111,0.62)] group-hover:shadow-[0_22px_70px_rgba(0,0,0,0.38)]">
+                  <img src={venue.media} alt="" loading="lazy" decoding="async" />
+                </div>
+              </div>
+
+              <div className="min-w-0 border-t border-(--line) pt-4">
+                <span className="mb-3 block text-[0.72rem] font-extrabold uppercase text-(--gold)">
+                  {venue.category}
+                </span>
+                <h3 className="mb-3 text-[clamp(1.25rem,2vw,1.85rem)]">{venue.name}</h3>
+                <p className="mb-0 flex items-center gap-2 text-(--muted)">
+                  <MapPin size={15} aria-hidden="true" />
+                  {venue.location}
+                </p>
+                <p className="mt-4 max-w-130 text-[0.96rem] leading-7 text-(--soft)">
+                  {venue.pitch}
+                </p>
+              </div>
+            </ScrollReveal>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

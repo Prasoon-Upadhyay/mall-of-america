@@ -1,18 +1,37 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
-import {
-  ScrollReveal,
-  staggerContainer,
-  staggerItem,
-} from "../../components/animation/scroll-reveal.component";
+import { motion, type Variants } from "framer-motion";
+import { MapPin } from "lucide-react";
+import { ScrollReveal } from "../../components/animation/scroll-reveal.component";
 import { DeckMedia } from "../../components/media/deck-media.component";
-import { entertainmentAttractions, entertainmentMedia } from "./entertainment.data";
-import type { EntertainmentAttractionId } from "./entertainment.types";
-import {
-  getEntertainmentAttraction,
-  getEntertainmentContactCopy,
-} from "./entertainment.utils";
+import { entertainmentAttractions, entertainmentOverview } from "./entertainment.data";
+
+const cinematicRevealDelays = [0.46, 0.12, 0.68, 0.3];
+const cinematicRevealOffsets = [
+  { x: -18, y: 26 },
+  { x: 16, y: 14 },
+  { x: -8, y: 34 },
+  { x: 20, y: 24 },
+];
+
+const cinematicRevealItem: Variants = {
+  hidden: ({ index }: { index: number }) => ({
+    opacity: 0,
+    scale: 0.96,
+    filter: "blur(14px)",
+    ...cinematicRevealOffsets[index % cinematicRevealOffsets.length],
+  }),
+  visible: ({ index }: { index: number }) => ({
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      delay: cinematicRevealDelays[index % cinematicRevealDelays.length],
+      duration: 0.92,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
 
 /**
  * Renders the interactive entertainment platform slide.
@@ -25,15 +44,17 @@ import {
  * ```
  */
 export default function EntertainmentSlide() {
-  const [activeAttractionId, setActiveAttractionId] = useState<EntertainmentAttractionId>(
-    entertainmentAttractions[0].id,
-  );
-  const activeAttraction = getEntertainmentAttraction(activeAttractionId);
-
   return (
-    <section className="py-[clamp(88px,12vw,148px)]" id="entertainment">
-      <div className="mx-auto w-[min(1180px,calc(100%-48px))] max-[640px]:w-[min(100%-32px,1180px)]">
-        <ScrollReveal className="mb-[42px] max-w-[880px] [&>p:not(.eyebrow)]:max-w-[700px] [&>p:not(.eyebrow)]:text-[1.05rem]">
+    <section
+      className="relative overflow-hidden bg-[#080806] py-[clamp(88px,12vw,148px)] after:pointer-events-none after:absolute after:inset-0 after:bg-[linear-gradient(90deg,rgba(8,8,6,0.88),rgba(8,8,6,0.44)_58%,rgba(8,8,6,0.82)),linear-gradient(180deg,rgba(8,8,6,0.28),rgba(8,8,6,0.54)_66%,#080806_100%)] after:content-['']"
+      id="entertainment"
+    >
+      <div className="absolute inset-0 z-0 opacity-[0.86] [&_.deck-media-element]:h-full [&_.deck-media-element]:min-h-full [&_.deck-media-shell]:h-full [&_.deck-media-shell]:min-h-full" aria-hidden="true">
+        <DeckMedia src={entertainmentOverview.media} loading="eager" />
+      </div>
+
+      <div className="relative z-1 mx-auto w-[min(1180px,calc(100%-48px))] max-[640px]:w-[min(100%-32px,1180px)]">
+        <ScrollReveal className="mb-10.5 max-w-220 [&>p:not(.eyebrow)]:max-w-175 [&>p:not(.eyebrow)]:text-[1.05rem]">
           <p className="eyebrow">Entertainment engine</p>
           <h2>The traffic driver traditional centers cannot manufacture.</h2>
           <p>
@@ -42,78 +63,33 @@ export default function EntertainmentSlide() {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-[minmax(0,1.08fr)_minmax(340px,0.92fr)] gap-5 max-[980px]:grid-cols-1">
-          <ScrollReveal
-            className="media-frame reveal-media h-full min-h-full overflow-hidden max-[980px]:min-h-[420px] max-[640px]:min-h-[340px]"
-            direction="right"
-          >
-            <DeckMedia src={entertainmentMedia} />
-          </ScrollReveal>
-
-          <ScrollReveal direction="left" delay={0.08}>
-            <article className="flex min-h-full flex-col justify-between border border-(--line) bg-(--panel) p-[clamp(24px,4vw,42px)] shadow-(--shadow) backdrop-blur-[18px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeAttraction.id}
-                  initial={{ opacity: 0, x: 20, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, x: -16, filter: "blur(8px)" }}
-                  transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <span className="mb-4 inline-flex border border-(--line) bg-[rgba(248,245,236,0.04)] px-3 py-2 text-[0.78rem] font-extrabold uppercase text-(--gold)">
-                    {activeAttraction.category}
-                  </span>
-                  <h3>{activeAttraction.name}</h3>
-                  <p className="text-(--muted)">{activeAttraction.location}</p>
-                  <strong className="my-5 block text-[1.1rem] leading-snug text-(--ink)">
-                    {activeAttraction.commercialRole}
-                  </strong>
-                  <p>{activeAttraction.pitch}</p>
-                  <ul className="mt-6 grid list-none gap-3 p-0">
-                    {activeAttraction.proofPoints.map((point) => (
-                      <li className="flex items-center gap-2.5 text-(--ink)" key={point}>
-                        <Check className="shrink-0 text-(--gold)" size={16} aria-hidden="true" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              </AnimatePresence>
-              <a className="mt-7 inline-flex items-center gap-2 font-bold text-(--ink) transition-colors hover:text-(--gold)" href="#contact">
-                {getEntertainmentContactCopy(activeAttraction)}
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </article>
-          </ScrollReveal>
-        </div>
-
         <motion.div
-          className="mt-4 grid grid-cols-5 gap-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1"
-          variants={staggerContainer}
+          className="mt-[clamp(28px,5vw,54px)] grid grid-cols-4 gap-[clamp(14px,2vw,22px)] max-[980px]:grid-cols-2 max-[640px]:grid-cols-1"
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          aria-label="Entertainment attraction selector"
+          animate="visible"
+          aria-label="Entertainment attractions"
         >
-          {entertainmentAttractions.map((attraction) => (
-            <motion.button
-              className={
-                activeAttractionId === attraction.id
-                  ? "min-h-[128px] cursor-pointer border border-[rgba(217,181,111,0.82)] bg-[rgba(217,181,111,0.15)] p-4 text-left text-(--ink)"
-                  : "min-h-[128px] cursor-pointer border border-(--line) bg-[rgba(248,245,236,0.05)] p-4 text-left text-(--ink) transition-colors hover:border-[rgba(217,181,111,0.55)]"
-              }
+          {entertainmentAttractions.map((attraction, index) => (
+            <motion.article
+              className="group min-w-0 transition-transform duration-260 ease-out hover:-translate-y-2"
+              custom={{ index }}
               key={attraction.id}
-              onClick={() => setActiveAttractionId(attraction.id)}
-              type="button"
-              variants={staggerItem}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.22 }}
+              variants={cinematicRevealItem}
             >
-              <span className="mb-2 block text-[0.72rem] font-extrabold uppercase text-(--gold)">
-                {attraction.category}
-              </span>
-              <strong className="block leading-tight">{attraction.name}</strong>
-            </motion.button>
+              <div className="reveal-media aspect-4/5 overflow-hidden border border-(--line) bg-(--panel-strong) shadow-(--shadow) backdrop-blur-xl transition-[border-color,box-shadow] duration-300 ease-out group-hover:border-[rgba(217,181,111,0.62)] group-hover:shadow-[0_28px_90px_rgba(0,0,0,0.42)]">
+                <img src={attraction.media} alt="" loading="lazy" decoding="async" />
+              </div>
+              <div className="grid gap-2.25 pt-4">
+                <span className="block text-[0.72rem] font-extrabold uppercase text-(--gold)">
+                  {attraction.category}
+                </span>
+                <h3 className="mb-0 text-[clamp(1.08rem,1.5vw,1.38rem)]">{attraction.name}</h3>
+                <p className="mb-0 flex items-center gap-2 text-[0.92rem] leading-[1.45] text-(--muted)">
+                  <MapPin size={14} aria-hidden="true" />
+                  {attraction.location}
+                </p>
+              </div>
+            </motion.article>
           ))}
         </motion.div>
       </div>
