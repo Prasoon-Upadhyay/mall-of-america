@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { useMemo, type PropsWithChildren } from "react";
 import type { DeckSlideDefinition } from "../../components/deck/deck.types";
 import { useDeckNavigation } from "../../hooks/use-deck-navigation";
 import { DeckContext } from "./deck.context";
@@ -24,16 +24,14 @@ type DeckProviderProps = PropsWithChildren<{
  */
 export function DeckProvider({ children, slides }: DeckProviderProps) {
   const navigation = useDeckNavigation({ slides });
-
-  return (
-    <DeckContext.Provider
-      value={{
-        ...navigation,
-        slides,
-        totalSlides: slides.length,
-      }}
-    >
-      {children}
-    </DeckContext.Provider>
+  const value = useMemo(
+    () => ({
+      ...navigation,
+      slides,
+      totalSlides: slides.length,
+    }),
+    [navigation, slides],
   );
+
+  return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 }

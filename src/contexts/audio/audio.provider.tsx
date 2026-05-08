@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type PropsWithChildren } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PropsWithChildren } from "react";
 import { assets } from "../../data/assets";
 import { AudioContext } from "./audio.context";
 
@@ -24,6 +24,7 @@ export function AudioProvider({ children }: PropsWithChildren) {
     "idle",
   );
   const hasAudioSource = assets.audio.ambient.length > 0;
+  const toggleMuted = useCallback(() => setIsMuted((muted) => !muted), []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -77,9 +78,9 @@ export function AudioProvider({ children }: PropsWithChildren) {
       hasAudioSource,
       isMuted,
       playbackState,
-      toggleMuted: () => setIsMuted((muted) => !muted),
+      toggleMuted,
     }),
-    [error, hasAudioSource, isMuted, playbackState],
+    [error, hasAudioSource, isMuted, playbackState, toggleMuted],
   );
 
   return (

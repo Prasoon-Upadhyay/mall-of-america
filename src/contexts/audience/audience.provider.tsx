@@ -1,4 +1,4 @@
-import { useState, type PropsWithChildren } from "react";
+import { useMemo, useState, type PropsWithChildren } from "react";
 import type { Audience } from "../../data/audience.data";
 import { AudienceContext } from "./audience.context";
 
@@ -18,8 +18,7 @@ import { AudienceContext } from "./audience.context";
  */
 export function AudienceProvider({ children }: PropsWithChildren) {
   const [audience, setAudience] = useState<Audience>("tenant");
+  const value = useMemo(() => ({ audience, setAudience }), [audience]);
 
-  return (
-    <AudienceContext.Provider value={{ audience, setAudience }}>{children}</AudienceContext.Provider>
-  );
+  return <AudienceContext.Provider value={value}>{children}</AudienceContext.Provider>;
 }

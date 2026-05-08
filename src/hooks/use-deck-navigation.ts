@@ -34,13 +34,11 @@ export function useDeckNavigation({
   enableKeyboard = true,
 }: UseDeckNavigationOptions): UseDeckNavigationResult {
   const lastSlideIndex = slides.length - 1;
-  const initialSlideIndex = useMemo(() => {
+  const [activeIndex, setActiveIndex] = useState(() => {
     if (!initialId) return 0;
     const index = getSlideIndexById(slides, initialId);
     return index >= 0 ? index : 0;
-  }, [initialId, slides]);
-
-  const [activeIndex, setActiveIndex] = useState(initialSlideIndex);
+  });
   const activeSlide = slides[activeIndex] ?? slides[0];
 
   /**
@@ -172,16 +170,29 @@ export function useDeckNavigation({
   useWindowEvent("hashchange", syncFromHash, syncHash);
   useWindowEvent("keydown", handleKeyboardNavigation, enableKeyboard);
 
-  return {
-    activeIndex,
-    activeSlide,
-    canGoNext: activeIndex < lastSlideIndex,
-    canGoPrevious: activeIndex > 0,
-    goToFirst,
-    goToLast,
-    goToNext,
-    goToPrevious,
-    goToSlide,
-    moveBy,
-  };
+  return useMemo(
+    () => ({
+      activeIndex,
+      activeSlide,
+      canGoNext: activeIndex < lastSlideIndex,
+      canGoPrevious: activeIndex > 0,
+      goToFirst,
+      goToLast,
+      goToNext,
+      goToPrevious,
+      goToSlide,
+      moveBy,
+    }),
+    [
+      activeIndex,
+      activeSlide,
+      goToFirst,
+      goToLast,
+      goToNext,
+      goToPrevious,
+      goToSlide,
+      lastSlideIndex,
+      moveBy,
+    ],
+  );
 }
