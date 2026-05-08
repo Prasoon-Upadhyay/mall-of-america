@@ -10,5 +10,5 @@
  * ```
  */
 export function getEventBookingCopy(eventTitle: string) {
-  return `Build a custom ${eventTitle.toLowerCase()} package for reach, production needs, and audience profile.`;
+  return `Build a ${eventTitle.toLowerCase()} package.`;
 }
