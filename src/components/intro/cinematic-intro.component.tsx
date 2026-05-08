@@ -23,11 +23,15 @@ const introLines = [
  */
 export function CinematicIntro() {
   const { hasAudioSource, isMuted, toggleMuted } = useAudio();
-  const { completeIntro } = useIntro();
+  const { completeIntro, showIntro } = useIntro();
 
   return (
     <motion.section
-      className="fixed inset-0 z-50 overflow-hidden bg-[#14110d]"
+      className={
+        showIntro
+          ? "fixed inset-0 z-50 overflow-hidden bg-[#14110d]"
+          : "pointer-events-none fixed inset-0 z-50 overflow-hidden bg-[#14110d]"
+      }
       aria-label="Cinematic introduction"
       initial={{ y: 0 }}
       animate={{ y: 0 }}
