@@ -32,7 +32,7 @@ export function DeckTrack() {
           return (
             <div
               className="deck-slide h-svh flex-[0_0_100vw] overflow-x-hidden overflow-y-auto overscroll-contain"
-              aria-hidden={isActive}
+              aria-hidden={activeIndex !== index}
               key={slide.id}
             >
               {isActive ? (
