@@ -35,7 +35,7 @@ export function CinematicIntro() {
       aria-label="Cinematic introduction"
       initial={{ y: 0 }}
       animate={{ y: 0 }}
-      exit={{ y: "-104%", filter: "blur(8px)" }}
+      exit={{ y: "-104%" }}
       transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="absolute inset-0" aria-hidden="true">
@@ -44,7 +44,7 @@ export function CinematicIntro() {
           loading="eager"
           videoLoop={false}
           videoMuted
-          videoPreload="auto"
+          videoPreload="metadata"
           onVideoEnded={completeIntro}
         />
       </div>
@@ -58,11 +58,10 @@ export function CinematicIntro() {
             {introLines.map((line, index) => (
               <motion.p
                 className="absolute inset-0 text-[clamp(1rem,2vw,1.32rem)] font-bold text-(--soft)"
-                initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{
                   opacity: [0, 1, 1, 0],
                   y: [18, 0, 0, -14],
-                  filter: ["blur(8px)", "blur(0px)", "blur(0px)", "blur(8px)"],
                 }}
                 transition={{
                   delay: index * 1.45,

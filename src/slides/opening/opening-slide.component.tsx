@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useDeck } from "../../contexts/deck/deck.hooks";
+import { useIntro } from "../../contexts/intro/intro.hooks";
 import { propertyData } from "../../data/property.data";
 import { HeroVideo } from "../../components/hero/hero-video.component";
 import { StatGrid } from "../../components/hero/hero-stats.component";
@@ -17,10 +18,11 @@ import { StatGrid } from "../../components/hero/hero-stats.component";
  */
 export default function OpeningSlide() {
   const { goToSlide } = useDeck();
+  const { showIntro } = useIntro();
 
   return (
     <section className="hero-section relative grid min-h-svh items-end overflow-hidden max-[640px]:px-4" id="opening">
-      <HeroVideo asset={propertyData.heroAsset} />
+      {showIntro ? null : <HeroVideo asset={propertyData.heroAsset} />}
       <div className="hero-content">
         <motion.p
           className="eyebrow"

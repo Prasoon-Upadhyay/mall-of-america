@@ -29,7 +29,7 @@ export function HeroVideo({ asset }: HeroVideoProps) {
           {status === "error" ? (
             <span>Video unavailable</span>
           ) : (
-            <LoaderCircle className="animate-spin text-[var(--gold)]" size={34} aria-hidden="true" />
+            <LoaderCircle className="animate-spin text-(--gold)" size={34} aria-hidden="true" />
           )}
         </div>
       ) : null}

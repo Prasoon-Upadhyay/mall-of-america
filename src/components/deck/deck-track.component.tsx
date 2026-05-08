@@ -31,7 +31,7 @@ export function DeckTrack() {
 
           return (
             <div
-              className="deck-slide h-svh flex-[0_0_100vw] overflow-x-hidden overflow-y-auto overscroll-contain"
+              className="deck-slide h-svh flex-[0_0_100vw] touch-pan-y overflow-x-hidden overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]"
               aria-hidden={activeIndex !== index}
               key={slide.id}
             >
